@@ -6365,23 +6365,24 @@ Bitcoin.Util = {
 		<div id="wallets">
 			<div id="detailarea" class="walletarea">	
 				<div id="detailcommands" class="commands">
-					<label id="detaillabelenterprivatekey" for="detailprivkey">Enter Private Key</label>
+					<p>Para cifrar tu CLAVE PRIVADA cópiala y pégala en el siguiente recuadro e introduce una contraseña que puedas recordar.</p>
+					<label id="detaillabelenterprivatekey" for="detailprivkey">Introduce aquí la clave privada</label>
 					<br />
 					<input type="text" id="detailprivkey" value="" onfocus="this.select();" />
 
 					<div id="detailbip38commands">
-						<label id="detaillabelpassphrase">Enter BIP38 Passphrase</label>
+						<label id="detaillabelpassphrase">Introduce una contraseña a tu elección</label>
 						<br />
 						<input type="text" id="detailprivkeypassphrase" value="" onfocus="this.select();" />
 						<br />
- 						<span id="detailbip38encryptspan"><input type="button" class="button" id="detailbip38encryptbutton" value="Encrypt BIP38" onclick="ninja.wallets.detailwallet.encryptBip38();" /></span>
+ 						<span id="detailbip38encryptspan"><input type="button" class="button" id="detailbip38encryptbutton" value="Cifrar" onclick="ninja.wallets.detailwallet.encryptBip38();" /></span>
 					</div>
 				</div>
 				<br />				
 				<div id="detailkeyarea">					
 					<div class="item" style="display: none;" id="detailbip38">
 						<hr>
-						<span class="label" id="detaillabelprivbip38">Private Key BIP38 Format (58 characters base58, starts with '6P'):</span>
+						<span class="label" id="detaillabelprivbip38">Clave privada cifrada (BIP38, empieza por '6P'):</span>
 						<br />
 						<br />
 						<div id="detailqrcodeprivatebip38" class="qrcode_private"></div>
