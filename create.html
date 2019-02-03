@@ -6357,7 +6357,7 @@ Bitcoin.Util = {
 a { position: relative; z-index: 20; }
 .right { text-align: right; }
 .walletarea { display: none; border: 2px solid #0693e3; }
-hr { margin: 20px 0; border-top: 2px dashed #0693e3; }
+hr { margin: 20px 0; border-top: 2px #0693e3; }
 .keyarea { height: 110px; text-align: left; position: relative; padding: 5px; }
 .keyarea .public { float: left; }
 .keyarea .pubaddress { display: inline-block; height: 40px; padding: 0 0 0 10px; float: left; }
@@ -6386,7 +6386,7 @@ input[type=checkbox] { position: relative; z-index: 20; }
 #generate { font-family: monospace; font-size: 1.25em; height: 305px; text-align: left; position: relative; padding: 5px; border: 2px solid #0693e3; clear: both; }
 #generate span { padding: 5px 5px 0 5px; }
 #generatekeyinput { position: relative; z-index: 20; }
-#keyarea { height: 250px; }
+#keyarea { height: auto; }
 #keyarea .pubaddress { float: none; display: block; padding: 0; height: auto; }
 #keyarea .label { text-decoration: none; }
 #keyarea .privwif { float: none; text-align: right; position: relative; padding: 0; }
@@ -6524,7 +6524,7 @@ input[type=checkbox] { position: relative; z-index: 20; }
 	.menu .tab.selected:hover { color: #000; }
 	
     .pagebreak { height: 50px; }
-	.commands { border-bottom: 2px solid #0693e3;  padding: 10px 2px; margin-bottom: 0; }
+	.commands {  padding: 10px 2px; margin-bottom: 0; }
 	.commands .row { padding: 0 0; text-align: left; } 
 	.commands .row.extra { padding-top: 6px; }
 	.commands span { padding: 0 10px; }
@@ -6601,9 +6601,9 @@ input[type=checkbox] { position: relative; z-index: 20; }
 		</ul>
 		
 		<div id="generate">
-			<span id="generatelabelbitcoinaddress">Generating Bitcoin Address...</span><br />
-			<span id="generatelabelmovemouse">MOVE your mouse around to add some extra randomness... </span><span id="mousemovelimit"></span><br />
-			<span id="generatelabelkeypress">OR type some random characters into this textbox</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
+			<span id="generatelabelbitcoinaddress">Generando monedero de Bitcoin...</span><br />
+			<span id="generatelabelmovemouse">Mueve el ratón para generar una clave de forma aleatoria... </span><span id="mousemovelimit"></span><br />
+			<span id="generatelabelkeypress">O escribe carácteres aleatorios en la caja de texto hasta completar el proceso</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
 			<div id="seedpooldisplay"></div>
 		</div>
 
@@ -6611,31 +6611,59 @@ input[type=checkbox] { position: relative; z-index: 20; }
 			<div id="singlearea" class="walletarea">
 				<div class="commands">
 					<div id="singlecommands" class="row">
-						<span><input type="button" id="newaddress" value="Generate New Address" onclick="ninja.wallets.singlewallet.generateNewAddressAndKey();" /></span>
+						<span><input type="button" id="newaddress" value="Generar nuevo monedero" onclick="ninja.wallets.singlewallet.generateNewAddressAndKey();" /></span>
 					</div>
 				</div>
 				<div class="body">
 					<div id="keyarea" class="keyarea">
 						<div class="public">
 							<div class="pubaddress">
-								<span class="label" id="singlelabelbitcoinaddress">Bitcoin Address</span>
+								<span class="label" id="singlelabelbitcoinaddress">Dirección para recibir bitcoins</span>
 							</div>
 							<div id="qrcode_public" class="qrcode_public"></div>
 							<div class="pubaddress">
 								<span class="output" id="btcaddress"></span>
 							</div>
-							<div id="singleshare">SHARE</div>
+							<div id="singleshare">PÚBLICA</div>
 						</div>
 						<div class="private">
 							<div class="privwif">
-								<span class="label" id="singlelabelprivatekey">Private Key</span>
+								<span class="label" id="singlelabelprivatekey">Clave privada</span>
 							</div>
 							<div id="qrcode_private" class="qrcode_private"></div>
 							<div class="privwif">
 								<span class="output" id="btcprivwif"></span>
 							</div>
-							<div id="singlesecret">SECRET</div>
+							<div id="singlesecret">PRIVADA</div>
 						</div>
+						<hr>
+
+							<div id="detailcommands" class="commands">
+								<p>Para cifrar tu CLAVE PRIVADA cópiala y pégala en el siguiente recuadro e introduce una contraseña que puedas recordar.</p>
+								<label id="detaillabelenterprivatekey" for="detailprivkey">Introduce aquí la clave privada</label>
+								<br />
+								<input type="text" id="detailprivkey" value="" onfocus="this.select();" />
+				
+								<div id="detailbip38commands">
+									<label id="detaillabelpassphrase">Introduce una contraseña a tu elección</label>
+									<br />
+									<input type="text" id="detailprivkeypassphrase" value="" onfocus="this.select();" />
+									<br />
+									 <span id="detailbip38encryptspan"><input type="button" class="button" id="detailbip38encryptbutton" value="Cifrar" onclick="ninja.wallets.detailwallet.encryptBip38();" /></span>
+								</div>
+							</div>
+							<br />				
+							<div id="detailkeyarea">					
+								<div class="item" style="display: none;" id="detailbip38">
+									<hr>
+									<span class="label" id="detaillabelprivbip38">Clave privada cifrada (BIP38, empieza por '6P'):</span>
+									<br />
+									<br />
+									<div id="detailqrcodeprivatebip38" class="qrcode_private_encrypted"></div>
+									<span class="output" id="detailprivbip38"></span>
+								</div>
+							</div>
+
 					</div>
 				</div>
 			</div>
@@ -7186,6 +7214,7 @@ ninja.publicKey = {
 	</script>
 	<script type="text/javascript">
 ninja.tab = {
+
     select: function (walletTab) {
         // detect type: normally an HtmlElement/object but when string then get the element
         if (typeof walletTab === 'string') {
@@ -7195,11 +7224,12 @@ ninja.tab = {
 
         if (walletTab.className.indexOf("selected") == -1) {
             // unselect all tabs
+			/*
             for (var wType in ninja.wallets) {
                 document.getElementById(wType).className = "tab";
                 ninja.wallets[wType].close();
             }
-            
+            */
             // don't open tab if entropy still being collected
             // exceptions: brainwallet detailwallet
             if (ninja.seeder.isStillSeeding == false || walletType == "brainwallet" || walletType == "detailwallet") {
@@ -10362,5 +10392,144 @@ ninja.foreachSerialized = function (collection, whatToDo, onComplete) {
 	};
 })(ninja);
 	</script>
+<script type="text/javascript">
+	(function (wallets, qrCode, privateKey, translator) {
+		var detail = wallets.detailwallet = {
+			isOpen: function () {
+				return (document.getElementById("detailwallet").className.indexOf("selected") != -1);
+			},
+	
+			open: function () {
+				document.getElementById("detailarea").style.display = "block";
+				document.getElementById("detailprivkey").focus();
+			},
+	
+			close: function () {
+				document.getElementById("detailarea").style.display = "none";
+			},
+	
+			openCloseFaq: function (faqNum) {
+				// do close
+				if (document.getElementById("detaila" + faqNum).style.display == "block") {
+					document.getElementById("detaila" + faqNum).style.display = "none";
+					document.getElementById("detaile" + faqNum).setAttribute("class", "more");
+				}
+				// do open
+				else {
+					document.getElementById("detaila" + faqNum).style.display = "block";
+					document.getElementById("detaile" + faqNum).setAttribute("class", "less");
+				}
+			},
+	
+			getKeyFromInput: function () {
+				var key = document.getElementById("detailprivkey").value.toString().replace(/^\s+|\s+$/g, ""); // trim white space
+				document.getElementById("detailprivkey").value = key;
+				return key;
+			},
+	
+			checkAndShowMini: function (key) {
+				if (Bitcoin.ECKey.isMiniFormat(key)) {
+					// show Private Key Mini Format
+					document.getElementById("detailprivmini").innerHTML = key;
+					document.getElementById("detailmini").style.display = "block";
+				}
+			},
+	
+			checkAndShowBase6: function (key) {
+				if (Bitcoin.ECKey.isBase6Format(key)) {
+					// show Private Key Base6 Format
+					document.getElementById("detailprivb6").innerHTML = key;
+					document.getElementById("detailb6").style.display = "block";
+				}
+			},
+	
+			keyToECKeyWithBrain: function (key) {
+				var btcKey = new Bitcoin.ECKey(key);
+				if (btcKey.error != null) {
+					alert(translator.get("detailalertnotvalidprivatekey") + "\n" + btcKey.error);
+				}
+				else if (btcKey.priv == null) {
+					// enforce a minimum passphrase length
+					if (key.length >= wallets.brainwallet.minPassphraseLength) {
+						// Deterministic Wallet confirm box to ask if user wants to SHA256 the input to get a private key
+						var usePassphrase = confirm(translator.get("detailconfirmsha256"));
+						if (usePassphrase) {
+							var bytes = Crypto.SHA256(key, { asBytes: true });
+							btcKey = new Bitcoin.ECKey(bytes);
+						}
+					}
+					else {
+						alert(translator.get("detailalertnotvalidprivatekey"));
+					}
+				}
+				return btcKey;
+			},
+	
+	/* 		decryptBip38: function () {
+				detail.clear();
+				var key = detail.getKeyFromInput();
+				if (key == "") {
+					return;
+				}
+				if (privateKey.isBIP38Format(key) == false) {
+					return;
+				}
+				document.getElementById("detailbip38toggle").style.display = "none";
+				var passphrase = document.getElementById("detailprivkeypassphrase").value.toString()
+				if (passphrase == "") {
+					alert(translator.get("bip38alertpassphraserequired"));
+					return;
+				}
+				document.getElementById("busyblock").className = "busy";
+				// show Private Key BIP38 Format
+				document.getElementById("detailprivbip38").innerHTML = key;
+				document.getElementById("detailbip38").style.display = "block";
+				qrCode.showQrCode({
+					"detailqrcodeprivatebip38": key
+				}, 4);
+				privateKey.BIP38EncryptedKeyToByteArrayAsync(key, passphrase, function (btcKeyOrError) {
+					document.getElementById("busyblock").className = "";
+					if (btcKeyOrError.message) {
+						alert(btcKeyOrError.message);
+						detail.clear();
+					} else {
+						detail.populateKeyDetails(new Bitcoin.ECKey(btcKeyOrError));
+					}
+				});
+			}, */
+	
+			encryptBip38: function () {
+				var key = detail.getKeyFromInput();
+				if (key == "") {
+					return;
+				}
+				if (privateKey.isBIP38Format(key)) {
+					return;
+				}
+				detail.checkAndShowMini(key);
+				detail.checkAndShowBase6(key);
+				var btcKey = detail.keyToECKeyWithBrain(key);
+				if (btcKey.priv == null) {
+					return;
+				}
+					var passphrase = document.getElementById("detailprivkeypassphrase").value.toString()
+					if (passphrase == "") {
+						alert(translator.get("bip38alertpassphraserequired"));
+						return;
+					}
+					document.getElementById("busyblock").className = "busy";
+					privateKey.BIP38PrivateKeyToEncryptedKeyAsync(btcKey.getBitcoinWalletImportFormat(), passphrase, btcKey.compressed, function (encryptedKey) {
+						qrCode.showQrCode({
+							"detailqrcodeprivatebip38": encryptedKey
+						}, 4);
+						// show Private Key BIP38 Format
+						document.getElementById("detailprivbip38").innerHTML = encryptedKey;
+						document.getElementById("detailbip38").style.display = "block";
+						document.getElementById("busyblock").className = "";
+					});
+			},
+		};
+	})(ninja.wallets, ninja.qrCode, ninja.privateKey, ninja.translator);
+</script>
 </body>
 </html>
