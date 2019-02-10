@@ -6604,6 +6604,7 @@ input[type=checkbox] { position: relative; z-index: 20; }
 			<span id="generatelabelbitcoinaddress">Generando monedero de Bitcoin...</span><br />
 			<span id="generatelabelmovemouse">Mueve el ratón para generar una clave de forma aleatoria... </span><span id="mousemovelimit"></span><br />
 			<span id="generatelabelkeypress">O escribe carácteres aleatorios en la caja de texto hasta completar el proceso</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
+			<input type="checkbox" id="randomMouse"> Desactivar generación de entropía por ratón (seleccionar si hay problemas desde el móvil) <br />
 			<div id="seedpooldisplay"></div>
 		</div>
 
@@ -7045,21 +7046,23 @@ ninja.publicKey = {
 
 	// seed function exists to wait for mouse movement to add more entropy before generating an address
 	seed: function (evt) {
-		if (!evt) var evt = window.event;
-		var timeStamp = new Date().getTime();
-		// seeding is over now we generate and display the address
-		if (ninja.seeder.seedCount == ninja.seeder.seedLimit) {
-			ninja.seeder.seedCount++;
-			ninja.seeder.seedingOver();
-		}
-			// seed mouse position X and Y when mouse movements are greater than 40ms apart.
-		else if ((ninja.seeder.seedCount < ninja.seeder.seedLimit) && evt && (timeStamp - ninja.seeder.lastInputTime) > 40) {
-			SecureRandom.seedTime();
-			SecureRandom.seedInt16((evt.clientX * evt.clientY));
-			ninja.seeder.showPoint(evt.clientX, evt.clientY);
-			ninja.seeder.seedCount++;
-			ninja.seeder.lastInputTime = new Date().getTime();
-			ninja.seeder.showPool();
+		if(document.getElementById("randomMouse").checked == false) {
+			if (!evt) var evt = window.event;
+			var timeStamp = new Date().getTime();
+			// seeding is over now we generate and display the address
+			if (ninja.seeder.seedCount == ninja.seeder.seedLimit) {
+				ninja.seeder.seedCount++;
+				ninja.seeder.seedingOver();
+			}
+				// seed mouse position X and Y when mouse movements are greater than 40ms apart.
+			else if ((ninja.seeder.seedCount < ninja.seeder.seedLimit) && evt && (timeStamp - ninja.seeder.lastInputTime) > 40) {
+				SecureRandom.seedTime();
+				SecureRandom.seedInt16((evt.clientX * evt.clientY));
+				ninja.seeder.showPoint(evt.clientX, evt.clientY);
+				ninja.seeder.seedCount++;
+				ninja.seeder.lastInputTime = new Date().getTime();
+				ninja.seeder.showPool();
+			}
 		}
 	},
 
