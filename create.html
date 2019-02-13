@@ -6602,9 +6602,9 @@ input[type=checkbox] { position: relative; z-index: 20; }
 		
 		<div id="generate">
 			<span id="generatelabelbitcoinaddress">Generando monedero de Bitcoin...</span><br />
-			<span id="generatelabelmovemouse">Mueve el ratón para generar una clave de forma aleatoria... </span><span id="mousemovelimit"></span><br />
+			<span id="generatelabelmovemouse">Activa la generación de entropía avanzada y mueve el ratón para generar una clave de forma aleatoria... </span><span id="mousemovelimit"></span><br />
 			<span id="generatelabelkeypress">O escribe carácteres aleatorios en la caja de texto hasta completar el proceso</span> <input type="text" id="generatekeyinput" onkeydown="ninja.seeder.seedKeyPress(event);" /><br />
-			<input type="checkbox" id="randomMouse"> Desactivar generación de entropía por ratón (seleccionar si hay problemas desde el móvil) <br />
+			<input type="checkbox" id="randomMouse"> Activar la generación de entropía avanzada <br />
 			<div id="seedpooldisplay"></div>
 		</div>
 
@@ -7046,7 +7046,7 @@ ninja.publicKey = {
 
 	// seed function exists to wait for mouse movement to add more entropy before generating an address
 	seed: function (evt) {
-		if(document.getElementById("randomMouse").checked == false) {
+		if(document.getElementById("randomMouse").checked) {
 			if (!evt) var evt = window.event;
 			var timeStamp = new Date().getTime();
 			// seeding is over now we generate and display the address
